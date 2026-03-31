@@ -199,7 +199,7 @@ export default function Dashboard() {
               Book your first deal
             </button>
           </div>
-        ) : (
+        ) : (Array.isArray(deals) && deals.length > 0) ? (
           <div className="space-y-3">
             {deals.map((d) => (
               <div key={d._id}
@@ -221,7 +221,7 @@ export default function Dashboard() {
               </div>
             ))}
           </div>
-        )}
+        ) : null}
       </Section>
 
       {/* Deal Performance Ring */}

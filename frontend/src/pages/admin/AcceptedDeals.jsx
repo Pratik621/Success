@@ -13,8 +13,15 @@ export default function AcceptedDeals() {
 
   useEffect(() => {
     dealAPI.getAllDeals('Accepted')
-      .then(({ data }) => setDeals(data))
-      .catch(() => toast.error('Failed to load deals'))
+      .then(({ data }) => {
+        // Safety check - ensure data is an array
+        setDeals(Array.isArray(data) ? data : []);
+      })
+      .catch((err) => {
+        console.error('Failed to load deals:', err);
+        toast.error('Failed to load deals');
+        setDeals([]);
+      })
       .finally(() => setLoading(false));
   }, []);
 

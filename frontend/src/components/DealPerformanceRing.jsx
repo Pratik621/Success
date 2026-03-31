@@ -9,6 +9,9 @@ const CX = SZ / 2;
 export default function DealPerformanceRing({ deals = [] }) {
   const [animated, setAnimated] = useState(false);
 
+  // Safety check - ensure deals is an array
+  const dealsArray = Array.isArray(deals) ? deals : [];
+
   useEffect(() => {
     const t = setTimeout(() => setAnimated(true), 150);
     return () => clearTimeout(t);
@@ -31,7 +34,7 @@ export default function DealPerformanceRing({ deals = [] }) {
   // Total per month
   const totals = useMemo(() =>
     months.map(({ m, y }) =>
-      deals
+      dealsArray
         .filter(d => { const dt = new Date(d.createdAt); return dt.getMonth() === m && dt.getFullYear() === y; })
         .reduce((s, d) => s + (d.totalAmount || 0), 0)
     ), [deals, months]);

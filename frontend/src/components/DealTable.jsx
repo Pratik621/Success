@@ -1,6 +1,14 @@
 import { Badge, EmptyState } from './UI';
 
 export default function DealTable({ deals, emptyIcon, emptyMsg, renderActions, isAdmin }) {
+  // Safety check: ensure deals is an array
+  const dealsArray = Array.isArray(deals) ? deals : [];
+  
+  // Show empty state if no deals
+  if (dealsArray.length === 0) {
+    return <EmptyState icon={emptyIcon || '📭'} message={emptyMsg || 'No deals found.'} />;
+  }
+
   return (
     <>
       {/* Desktop */}
@@ -14,7 +22,7 @@ export default function DealTable({ deals, emptyIcon, emptyMsg, renderActions, i
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5">
-            {deals.map((d) => (
+            {dealsArray.map((d) => (
               <tr key={d._id} className="hover:bg-white/2 transition">
                 <td className="px-5 py-4">
                   <div className="flex items-center gap-2">
@@ -44,7 +52,7 @@ export default function DealTable({ deals, emptyIcon, emptyMsg, renderActions, i
 
       {/* Mobile cards */}
       <div className="sm:hidden space-y-3">
-        {deals.map((d) => (
+        {dealsArray.map((d) => (
           <div key={d._id} className="bg-[#1E293B] rounded-2xl border border-white/5 p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">

@@ -20,16 +20,25 @@ export default function AdminStats() {
 
   if (loading) return <Layout isAdmin><Spinner /></Layout>;
 
+  // Safety checks for stats data
+  if (!stats) return <Layout isAdmin><div className="p-6">Error loading stats</div></Layout>;
+
   const total = (stats.pending + stats.accepted + stats.completed + stats.rejected) || 1;
 
   const statusCards = [
-    { label: 'Pending',   value: stats.pending,   color: 'text-yellow-400', bg: 'bg-yellow-500/10', border: 'border-yellow-500/20' },
-    { label: 'Accepted',  value: stats.accepted,  color: 'text-blue-400',   bg: 'bg-blue-500/10',   border: 'border-blue-500/20' },
-    { label: 'Completed', value: stats.completed, color: 'text-green-400',  bg: 'bg-green-500/10',  border: 'border-green-500/20' },
-    { label: 'Rejected',  value: stats.rejected,  color: 'text-red-400',    bg: 'bg-red-500/10',    border: 'border-red-500/20' },
+    { label: 'Pending',   value: stats.pending || 0,   color: 'text-yellow-400', bg: 'bg-yellow-500/10', border: 'border-yellow-500/20' },
+    { label: 'Accepted',  value: stats.accepted || 0,  color: 'text-blue-400',   bg: 'bg-blue-500/10',   border: 'border-blue-500/20' },
+    { label: 'Completed', value: stats.completed || 0, color: 'text-green-400',  bg: 'bg-green-500/10',  border: 'border-green-500/20' },
+    { label: 'Rejected',  value: stats.rejected || 0,  color: 'text-red-400',    bg: 'bg-red-500/10',    border: 'border-red-500/20' },
   ];
 
-  const maxRevenue = Math.max(...stats.monthlyRevenue.map(m => m.revenue), 1);
+  // Safe monthly revenue calculation
+  const monthlyRevenueArray = Array.isArray(stats.monthlyRevenue) ? stats.monthlyRevenue : [];
+  const maxRevenue = Math.max(...monthlyRevenueArray.map(m => m.revenue), 1);
+
+  // Safe arrays for rendering
+  const topMetalsArray = Array.isArray(stats.topMetals) ? stats.topMetals : [];
+  const topCompaniesArray = Array.isArray(stats.topCompanies) ? stats.topCompanies : [];
 
   return (
     <Layout isAdmin>
@@ -46,13 +55,13 @@ export default function AdminStats() {
         <div className="flex flex-col sm:flex-row sm:items-center gap-6">
           <div className="flex-1">
             <p className="text-slate-400 text-sm mb-1">This Month's Revenue</p>
-            <p className="text-4xl font-black text-white">₹{stats.currentMonthRevenue.toLocaleString()}</p>
+            <p className="text-4xl font-black text-white">₹{(stats.currentMonthRevenue || 0).toLocaleString()}</p>
             <p className="text-slate-500 text-xs mt-2">Resets on the 1st of each month</p>
           </div>
           <div className="sm:border-l sm:border-white/10 sm:pl-6">
             <p className="text-slate-400 text-sm mb-1">All-Time Revenue</p>
-            <p className="text-2xl font-black text-green-400">₹{stats.totalRevenue.toLocaleString()}</p>
-            <p className="text-slate-500 text-xs mt-2">{stats.completed} completed deals</p>
+            <p className="text-2xl font-black text-green-400">₹{(stats.totalRevenue || 0).toLocaleString()}</p>
+            <p className="text-slate-500 text-xs mt-2">{stats.completed || 0} completed deals</p>
           </div>
         </div>
       </div>
@@ -77,11 +86,11 @@ export default function AdminStats() {
           <h2 className="font-semibold text-white text-sm mb-4 flex items-center gap-2">
             <LuTrendingUp size={15} className="text-orange-400" /> Monthly Revenue (Last 6 Months)
           </h2>
-          {stats.monthlyRevenue.length === 0 ? (
+          {monthlyRevenueArray.length === 0 ? (
             <p className="text-slate-500 text-sm text-center py-8">No completed deals yet</p>
           ) : (
             <div className="flex items-end gap-2 h-32">
-              {stats.monthlyRevenue.map((m) => {
+              {monthlyRevenueArray.map((m) => {
                 const pct = (m.revenue / maxRevenue) * 100;
                 const label = `${MONTH_NAMES[m._id.month - 1]} ${String(m._id.year).slice(2)}`;
                 return (
@@ -106,12 +115,12 @@ export default function AdminStats() {
           <h2 className="font-semibold text-white text-sm mb-4 flex items-center gap-2">
             <LuPackage size={15} className="text-orange-400" /> Most Traded Metals
           </h2>
-          {stats.topMetals.length === 0 ? (
+          {topMetalsArray.length === 0 ? (
             <p className="text-slate-500 text-sm text-center py-8">No deals yet</p>
           ) : (
             <div className="space-y-3">
-              {stats.topMetals.map((m, i) => {
-                const maxCount = stats.topMetals[0].count;
+              {topMetalsArray.map((m, i) => {
+                const maxCount = topMetalsArray[0].count;
                 return (
                   <div key={m._id} className="flex items-center gap-3">
                     <span className="text-xs text-slate-600 w-4 shrink-0">{i + 1}</span>
@@ -138,11 +147,11 @@ export default function AdminStats() {
         <h2 className="font-semibold text-white text-sm mb-4 flex items-center gap-2">
           <LuUsers size={15} className="text-orange-400" /> Top Companies by Revenue
         </h2>
-        {stats.topCompanies.length === 0 ? (
+        {topCompaniesArray.length === 0 ? (
           <p className="text-slate-500 text-sm text-center py-8">No completed deals yet</p>
         ) : (
           <div className="space-y-3">
-            {stats.topCompanies.map((c, i) => (
+            {topCompaniesArray.map((c, i) => (
               <div key={c._id} className="flex items-center gap-3 p-3 bg-[#0F172A] rounded-xl border border-white/5">
                 <div className="w-8 h-8 bg-orange-500/10 rounded-xl flex items-center justify-center text-orange-400 font-bold text-sm shrink-0">
                   {i + 1}

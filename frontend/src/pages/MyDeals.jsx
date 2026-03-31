@@ -72,7 +72,7 @@ export default function MyDeals() {
         </div>
       </div>
 
-      {deals.length === 0 ? (
+      {!Array.isArray(deals) || deals.length === 0 ? (
         <div className="bg-[#1E293B] rounded-2xl border border-white/5 p-10">
           <EmptyState icon="📭" message="No deals found." />
         </div>
