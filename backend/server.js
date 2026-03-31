@@ -15,16 +15,50 @@ const contactRoutes  = require('./routes/contactRoutes');
 const app = express();
 connectDB();
 
-// Configure CORS for production and development
-const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
 
-app.use(cors(corsOptions));
+// ================== ❌ OLD CORS (NOT USED) ==================
+// This was your old config (works locally but not flexible for production)
+
+// const corsOptions = {
+//   origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+//   credentials: true,
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+// };
+
+
+// ================== ✅ NEW CORS (CORRECT) ==================
+
+const allowedOrigins = [
+  'http://localhost:5173',          // local frontend
+  process.env.FRONTEND_URL          // deployed frontend (from Render ENV)
+];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    // allow requests with no origin (like Postman)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
+
+
+// ================== ❌ REMOVE THIS LINE ==================
+// This line will crash your server because corsOptions is removed
+
+// app.use(cors(corsOptions));
+
+
+// ================== ✅ MIDDLEWARE ==================
+
 app.use(express.json());
+
+
+// ================== ✅ ROUTES ==================
 
 app.use('/api/auth',      authRoutes);
 app.use('/api/deals',     dealRoutes);
@@ -33,6 +67,9 @@ app.use('/api/reviews',   reviewRoutes);
 app.use('/api/reminders', reminderRoutes);
 app.use('/api/referrals', referralRoutes);
 app.use('/api/contact',   contactRoutes);
+
+
+// ================== ✅ ADMIN SEED ==================
 
 const seedAdmin = async () => {
   try {
@@ -52,10 +89,23 @@ const seedAdmin = async () => {
     console.error('Admin seed error:', err.message);
   }
 };
+
 seedAdmin();
 
+
+// ================== ✅ ERROR HANDLING ==================
+
 app.use((req, res) => res.status(404).json({ message: 'Route not found' }));
-app.use((err, req, res, next) => res.status(500).json({ message: err.message }));
+
+app.use((err, req, res, next) => 
+  res.status(500).json({ message: err.message })
+);
+
+
+// ================== ✅ SERVER START ==================
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+app.listen(PORT, () => 
+  console.log(`Server running on port ${PORT}`)
+);
