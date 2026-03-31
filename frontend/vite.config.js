@@ -9,6 +9,9 @@ export default defineConfig({
       '/api': 'http://localhost:5000',
     },
   },
+  preview: {
+    port: 3000,
+  },
   css: {
     postcss: './postcss.config.js',
   },

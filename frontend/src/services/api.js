@@ -1,17 +1,35 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: import.meta.env.VITE_API_URL });
+const API = axios.create({ 
+  baseURL: import.meta.env.VITE_API_URL,
+  withCredentials: true,
+});
 
+// Request interceptor: Add token to all requests
 API.interceptors.request.use((config) => {
   const user = JSON.parse(localStorage.getItem('user') || 'null');
   if (user?.token) {
     config.headers.Authorization = `Bearer ${user.token}`;
     console.log('✅ Token added to request:', config.url);
   } else {
-    console.warn('⚠️ No token found for request:', config.url, 'User:', user);
+    console.warn('⚠️ No token found for request:', config.url);
   }
   return config;
 });
+
+// Response interceptor: Handle token expiration
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // If 401 (token expired), clear localStorage and redirect to login
+    if (error.response?.status === 401) {
+      console.warn('⚠️ Token expired. Clearing user data.');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const authAPI = {
   signup:             (data) => API.post('/auth/signup', data),
