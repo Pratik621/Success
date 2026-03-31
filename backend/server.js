@@ -13,11 +13,16 @@ const referralRoutes = require('./routes/referralRoutes');
 const contactRoutes  = require('./routes/contactRoutes');
 
 const app = express();
-connectDB();
 
 
-// ================== ❌ OLD CORS (NOT USED) ==================
-// This was your old config (works locally but not flexible for production)
+// ================== ✅ TEMPORARY CORS (WORKING) ==================
+// This allows ALL origins (fixes your current error)
+
+app.use(cors());
+
+
+// ================== ❌ OLD CORS CONFIG (COMMENTED) ==================
+// This was your previous setup (causing issues now)
 
 // const corsOptions = {
 //   origin: process.env.FRONTEND_URL || 'http://localhost:5173',
@@ -26,40 +31,38 @@ connectDB();
 //   allowedHeaders: ['Content-Type', 'Authorization'],
 // };
 
-
-// ================== ✅ NEW CORS (CORRECT) ==================
-
-const allowedOrigins = [
-  'http://localhost:5173',          // local frontend
-  process.env.FRONTEND_URL          // deployed frontend (from Render ENV)
-];
-
-app.use(cors({
-  origin: function(origin, callback) {
-    // allow requests with no origin (like Postman)
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true
-}));
-
-
-// ================== ❌ REMOVE THIS LINE ==================
-// This line will crash your server because corsOptions is removed
-
 // app.use(cors(corsOptions));
 
 
-// ================== ✅ MIDDLEWARE ==================
+// ================== ❌ CUSTOM CORS (COMMENTED) ==================
+// This also caused conflict when used with app.use(cors())
 
+// const allowedOrigins = [
+//   'http://localhost:5173',
+//   process.env.FRONTEND_URL
+// ];
+
+// app.use(cors({
+//   origin: function(origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   credentials: true
+// }));
+
+
+// ================== ✅ CONNECT DATABASE ==================
+connectDB();
+
+
+// ================== ✅ MIDDLEWARE ==================
 app.use(express.json());
 
 
 // ================== ✅ ROUTES ==================
-
 app.use('/api/auth',      authRoutes);
 app.use('/api/deals',     dealRoutes);
 app.use('/api/metals',    metalRoutes);
@@ -70,7 +73,6 @@ app.use('/api/contact',   contactRoutes);
 
 
 // ================== ✅ ADMIN SEED ==================
-
 const seedAdmin = async () => {
   try {
     const exists = await User.findOne({ email: process.env.ADMIN_EMAIL });
@@ -94,7 +96,6 @@ seedAdmin();
 
 
 // ================== ✅ ERROR HANDLING ==================
-
 app.use((req, res) => res.status(404).json({ message: 'Route not found' }));
 
 app.use((err, req, res, next) => 
@@ -103,7 +104,6 @@ app.use((err, req, res, next) =>
 
 
 // ================== ✅ SERVER START ==================
-
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => 
