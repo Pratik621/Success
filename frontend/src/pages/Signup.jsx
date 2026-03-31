@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { authAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
-import { LuBuilding2, LuMapPin, LuMail, LuPhone, LuLock, LuArrowRight, LuHeadphonesIcon, LuHelpCircle } from 'react-icons/lu';
+import { LuBuilding2, LuMapPin, LuMail, LuPhone, LuLock, LuArrowRight, LuHeadphones, LuCircleHelp } from 'react-icons/lu';
 import ContactModal from '../components/ContactModal';
 
 const fields = [
@@ -45,7 +45,7 @@ export default function Signup() {
         onClick={() => setContactModalOpen(true)}
         className="fixed bottom-4 right-4 z-40 md:hidden flex items-center gap-2 px-4 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition"
       >
-        <LuHelpCircle size={20} />
+        <LuCircleHelp size={20} />
         <span className="text-sm">Help</span>
       </button>
 
@@ -93,7 +93,7 @@ export default function Signup() {
               onClick={() => setContactModalOpen(true)}
               className="hidden md:flex w-full items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-orange-400 transition text-sm font-medium border border-slate-700 hover:border-orange-500/30 mt-4"
             >
-              <LuHeadphonesIcon size={16} />
+              <LuHeadphones size={16} />
               Need Help? Contact Us
             </button>
 
