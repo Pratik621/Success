@@ -90,9 +90,6 @@ export default function Signup() {
             
             {/* Desktop Contact Button */}
             <button
-
-      {/* Contact Modal */}
-      <ContactModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} />
               onClick={() => setContactModalOpen(true)}
               className="hidden md:flex w-full items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-orange-400 transition text-sm font-medium border border-slate-700 hover:border-orange-500/30 mt-4"
             >
@@ -107,6 +104,9 @@ export default function Signup() {
           </div>
         </div>
       </div>
+
+      {/* Contact Modal */}
+      <ContactModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} />
     </div>
   );
 }
