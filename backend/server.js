@@ -18,7 +18,32 @@ const app = express();
 // ================== ✅ TEMPORARY CORS (WORKING) ==================
 // This allows ALL origins (fixes your current error)
 
-app.use(cors());
+// app.use(cors());
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'http://localhost:5173',
+  'https://success-1.onrender.com',
+  'https://success-frontend-copb.onrender.com'
+];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// ✅ ADD THIS LINE (VERY IMPORTANT)
+app.options('*', cors());
 
 
 // ================== ❌ OLD CORS CONFIG (COMMENTED) ==================
