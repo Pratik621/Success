@@ -37,6 +37,7 @@ export const authAPI = {
   adminLogin:         (data) => API.post('/auth/admin/login', data),
   updateProfile:      (data) => API.put('/auth/profile', data),
   getNotifCounts:     ()     => API.get('/auth/admin/notifs'),
+  getAllUsers:        ()     => API.get('/auth/admin/users'),
   adminResetPassword: (data) => API.put('/auth/admin/reset-password', data),
 };
 

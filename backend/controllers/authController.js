@@ -63,6 +63,18 @@ const updateProfile = async (req, res) => {
   } catch (err) { res.status(500).json({ message: err.message }); }
 };
 
+// Admin: fetch all registered users (non-admin)
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({ role: 'user' })
+      .select('companyName companyAddress phone email')
+      .sort({ companyName: 1 });
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 // Admin notification counts
 const getNotifCounts = async (req, res) => {
   try {
@@ -105,4 +117,4 @@ const adminResetPassword = async (req, res) => {
   } catch (err) { res.status(500).json({ message: err.message }); }
 };
 
-module.exports = { signup, login, adminLogin, updateProfile, getNotifCounts, adminResetPassword };
+module.exports = { signup, login, adminLogin, updateProfile, getNotifCounts, adminResetPassword, getAllUsers };

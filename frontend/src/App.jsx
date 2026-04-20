@@ -23,6 +23,7 @@ import AdminReminders  from './pages/admin/AdminReminders';
 import AdminReferrals  from './pages/admin/AdminReferrals';
 import ManageContact   from './pages/admin/ManageContact';
 import AdminStats      from './pages/admin/AdminStats';
+import AllUsers        from './pages/admin/AllUsers';
 import ResetUserPassword from './pages/admin/ResetUserPassword';
 
 export default function App() {
@@ -54,6 +55,7 @@ export default function App() {
           <Route path="/admin/reviews"      element={<AdminRoute><ManageReviews /></AdminRoute>} />
           <Route path="/admin/reminders"    element={<AdminRoute><AdminReminders /></AdminRoute>} />
           <Route path="/admin/referrals"    element={<AdminRoute><AdminReferrals /></AdminRoute>} />
+          <Route path="/admin/users"        element={<AdminRoute><AllUsers /></AdminRoute>} />
           <Route path="/admin/contact"      element={<AdminRoute><ManageContact /></AdminRoute>} />
           <Route path="/admin/stats"        element={<AdminRoute><AdminStats /></AdminRoute>} />
           <Route path="/admin/reset-password" element={<AdminRoute><ResetUserPassword /></AdminRoute>} />

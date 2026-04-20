@@ -26,8 +26,9 @@ const adminLinks = [
   { to: '/admin/completed',    label: 'Completed', Icon: LuTrophy },
   { to: '/admin/reminders',    label: 'Pickups',   Icon: LuBell },
   { to: '/admin/referrals',    label: 'Referrals', Icon: LuUsers },
+  { to: '/admin/users',        label: 'Users',     Icon: LuUser },
   { to: '/admin/metals',       label: 'Metals',    Icon: LuSettings },
-  { to: '/admin/stats',          label: 'Stats',   Icon: LuChartBar },
+  { to: '/admin/stats',        label: 'Stats',     Icon: LuChartBar },
   { to: '/admin/reset-password', label: 'Reset Pwd', Icon: LuKeyRound },
 ];
 
@@ -37,6 +38,7 @@ const adminDesktopLinks = [
   { to: '/admin/completed',      label: 'Completed', Icon: LuTrophy },
   { to: '/admin/reminders',      label: 'Pickups',   Icon: LuBell },
   { to: '/admin/referrals',      label: 'Referrals', Icon: LuUsers },
+  { to: '/admin/users',          label: 'Users',     Icon: LuUser },
   { to: '/admin/metals',         label: 'Metals',    Icon: LuSettings },
   { to: '/admin/contact',        label: 'Contact',   Icon: LuHeadphones },
   { to: '/admin/stats',          label: 'Stats',     Icon: LuChartBar },
