@@ -9,6 +9,44 @@ import toast from 'react-hot-toast';
 import { LuTrendingUp, LuTrendingDown, LuClock, LuStar, LuPackagePlus, LuChevronRight, LuActivity, LuLogOut, LuX, LuHistory } from 'react-icons/lu';
 import DealPerformanceRing from '../components/DealPerformanceRing';
 import { useLogoutModal } from '../components/Layout';
+import copperImg from '../assets/top/copper.png';
+import aluminiumImg from '../assets/top/alluminium.png';
+
+const carouselImages = [copperImg, aluminiumImg];
+
+function ImageCarousel() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent(prev => (prev + 1) % carouselImages.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="relative overflow-hidden rounded-2xl mb-6 h-36 sm:h-56 bg-[#F5E8D0]">
+      {carouselImages.map((img, i) => (
+        <img
+          key={i}
+          src={img}
+          alt={`banner-${i}`}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === current ? 'opacity-100' : 'opacity-0'}`}
+        />
+      ))}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+        {carouselImages.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? 'bg-white w-5' : 'bg-white/50 w-1.5'}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -77,21 +115,12 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      {/* Hero Card */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-[#1E293B] via-[#1a2744] to-[#1E293B] rounded-2xl border border-white/5 p-5 sm:p-7 mb-6 sm:mb-8">
-        <div className="absolute -top-10 -right-10 w-48 h-48 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
-          <div>
-            <p className="text-slate-400 text-sm font-medium mb-1">Welcome back 👋</p>
-            <h1 className="text-xl sm:text-2xl font-bold text-white leading-tight">{user.companyName}</h1>
-            <p className="text-slate-400 text-sm mt-1.5">Your company is growing with us.</p>
-          </div>
-          <button onClick={() => navigate('/book-deal')}
-            className="btn-primary flex items-center gap-2 w-full sm:w-auto justify-center">
-            <LuPackagePlus size={18} /> Book a Deal
-          </button>
-        </div>
+      <ImageCarousel />
+      <div className="mb-6">
+        <button onClick={() => navigate('/book-deal')}
+          className="btn-primary flex items-center gap-2 w-full justify-center">
+          <LuPackagePlus size={18} /> Book a Deal
+        </button>
       </div>
 
       {/* Metal Rates */}
@@ -102,7 +131,7 @@ export default function Dashboard() {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
             {metals.map((m) => (
               <div key={m._id} onClick={() => openHistory(m)}
-                className="bg-[#1E293B] rounded-2xl border border-white/5 p-4 hover:border-orange-500/30 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer active:scale-95">
+                className="bg-white rounded-2xl border border-[#F0E0C0] p-4 hover:border-orange-400/50 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer active:scale-95">
                 <div className="w-9 h-9 bg-orange-500/15 rounded-xl flex items-center justify-center text-lg mb-3">🔩</div>
                 <p className="font-semibold text-white text-sm truncate">{m.metalName}</p>
                 <p className="text-orange-400 font-bold text-lg mt-0.5">
@@ -121,9 +150,9 @@ export default function Dashboard() {
       {historyMetal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setHistoryMetal(null)} />
-          <div className="relative bg-[#1E293B] border border-white/10 rounded-2xl w-full max-w-sm shadow-2xl p-6">
+          <div className="relative bg-white border border-[#F0E0C0] rounded-2xl w-full max-w-sm shadow-2xl p-6">
             <button onClick={() => setHistoryMetal(null)}
-              className="absolute top-4 right-4 text-slate-500 hover:text-white transition">
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 transition">
               <LuX size={18} />
             </button>
 
@@ -131,7 +160,7 @@ export default function Dashboard() {
             <div className="flex items-center gap-3 mb-5">
               <div className="w-10 h-10 bg-orange-500/15 rounded-xl flex items-center justify-center text-xl shrink-0">🔩</div>
               <div>
-                <p className="font-bold text-white">{historyMetal.metalName}</p>
+                <p className="font-bold text-slate-800">{historyMetal.metalName}</p>
                 <p className="text-orange-400 font-semibold text-sm">
                   Current: &#8377;{historyMetal.pricePerKg}/kg
                 </p>
@@ -147,9 +176,9 @@ export default function Dashboard() {
                 <div className="w-6 h-6 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
               </div>
             ) : priceHistory.length === 0 ? (
-              <div className="text-center py-5 bg-[#0F172A] rounded-xl border border-white/5">
+              <div className="text-center py-5 bg-[#FFF8EE] rounded-xl border border-[#F0E0C0]">
                 <p className="text-slate-500 text-sm">No price changes recorded yet.</p>
-                <p className="text-slate-600 text-xs mt-1">Current rate is the original price.</p>
+                <p className="text-slate-400 text-xs mt-1">Current rate is the original price.</p>
               </div>
             ) : (
               <div className="space-y-2">
@@ -157,12 +186,12 @@ export default function Dashboard() {
                   const up = h.newPrice > h.oldPrice;
                   const pct = ((h.newPrice - h.oldPrice) / h.oldPrice * 100).toFixed(1);
                   return (
-                    <div key={i} className="flex items-center justify-between bg-[#0F172A] rounded-xl px-4 py-3 border border-white/5">
+                    <div key={i} className="flex items-center justify-between bg-[#FFF8EE] rounded-xl px-4 py-3 border border-[#F0E0C0]">
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="text-slate-500 text-xs line-through">&#8377;{h.oldPrice}</span>
+                          <span className="text-slate-400 text-xs line-through">&#8377;{h.oldPrice}</span>
                           <span className="text-slate-600 text-xs">&#8594;</span>
-                          <span className="text-white text-sm font-bold">&#8377;{h.newPrice}</span>
+                          <span className="text-slate-800 text-sm font-bold">&#8377;{h.newPrice}</span>
                           {up
                             ? <LuTrendingUp size={13} className="text-green-400" />
                             : <LuTrendingDown size={13} className="text-red-400" />}
@@ -193,7 +222,7 @@ export default function Dashboard() {
           </button>
         </div>
         {deals.length === 0 ? (
-          <div className="bg-[#1E293B] rounded-2xl border border-white/5 p-8 text-center">
+          <div className="bg-white rounded-2xl border border-[#F0E0C0] p-8 text-center">
             <p className="text-slate-400 text-sm mb-3">No deals yet.</p>
             <button onClick={() => navigate('/book-deal')} className="btn-primary text-sm px-5 py-2.5">
               Book your first deal
@@ -203,18 +232,18 @@ export default function Dashboard() {
           <div className="space-y-3">
             {deals.map((d) => (
               <div key={d._id}
-                className="bg-[#1E293B] rounded-2xl border border-white/5 p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 hover:border-white/10 transition">
+                className="bg-white rounded-2xl border border-[#F0E0C0] p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 hover:border-orange-300/50 transition">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-orange-500/10 rounded-xl flex items-center justify-center text-orange-400 font-bold text-sm shrink-0">
                     {d.metalType[0]}
                   </div>
                   <div>
-                    <p className="font-semibold text-white text-sm">{d.metalType}</p>
+                    <p className="font-semibold text-slate-800 text-sm">{d.metalType}</p>
                     <p className="text-slate-500 text-xs">{d.weight} {d.weightUnit} · &#8377;{d.rate}/kg</p>
                   </div>
                 </div>
                 <div className="flex items-center justify-between sm:justify-end gap-4">
-                  <p className="font-bold text-white">&#8377;{d.totalAmount.toLocaleString()}</p>
+                  <p className="font-bold text-slate-800">&#8377;{d.totalAmount.toLocaleString()}</p>
                   <Badge status={d.status} />
                   <p className="text-slate-500 text-xs hidden sm:block">{new Date(d.createdAt).toLocaleDateString()}</p>
                 </div>
@@ -232,23 +261,23 @@ export default function Dashboard() {
       {/* Reviews */}
       <Section title="Company Reviews" icon={<LuStar size={18} />}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          <div className="bg-[#1E293B] rounded-2xl border border-white/5 p-5 sm:p-6">
-            <h3 className="font-semibold text-white mb-4 text-sm">Share Your Experience</h3>
+          <div className="bg-white rounded-2xl border border-[#F0E0C0] p-5 sm:p-6">
+            <h3 className="font-semibold text-slate-800 mb-4 text-sm">Share Your Experience</h3>
             <form onSubmit={submitReview} className="space-y-4">
               <div ref={ratingRef}>
                 <label className="label-dark">Rating</label>
                 <div className="relative">
                   <button type="button" onClick={() => setRatingOpen(o => !o)}
-                    className="w-full bg-[#0F172A] border border-white/10 rounded-xl px-4 py-3 text-sm text-white flex items-center justify-between hover:border-orange-500/40 focus:outline-none focus:ring-2 focus:ring-orange-500 transition">
+                    className="w-full bg-[#FFF8EE] border border-[#E8D5B0] rounded-xl px-4 py-3 text-sm text-slate-800 flex items-center justify-between hover:border-orange-500/40 focus:outline-none focus:ring-2 focus:ring-orange-500 transition">
                     <span>{'⭐'.repeat(reviewForm.rating)} — {reviewForm.rating} star{reviewForm.rating > 1 ? 's' : ''}</span>
                     <span className={`text-slate-400 text-xs transition-transform duration-200 ${ratingOpen ? 'rotate-180' : ''}`}>▼</span>
                   </button>
                   {ratingOpen && (
-                    <div className="absolute z-20 mt-2 w-full bg-[#1E293B] border border-white/5 rounded-2xl overflow-hidden shadow-xl">
+                    <div className="absolute z-20 mt-2 w-full bg-white border border-[#F0E0C0] rounded-2xl overflow-hidden shadow-xl">
                       {[5, 4, 3, 2, 1].map((r) => (
                         <button key={r} type="button"
                           onClick={() => { setReviewForm({ ...reviewForm, rating: r }); setRatingOpen(false); }}
-                          className={`w-full flex items-center gap-3 px-4 py-3 text-sm transition hover:bg-orange-500/10 ${reviewForm.rating === r ? 'text-orange-400 bg-orange-500/5' : 'text-white'}`}>
+                          className={`w-full flex items-center gap-3 px-4 py-3 text-sm transition hover:bg-orange-500/10 ${reviewForm.rating === r ? 'text-orange-500 bg-orange-500/5' : 'text-slate-700'}`}>
                           <span className="w-8 h-8 bg-orange-500/15 rounded-xl flex items-center justify-center text-base shrink-0">⭐</span>
                           <span className="font-semibold">{r} star{r > 1 ? 's' : ''}</span>
                           <span className="ml-auto text-yellow-400 text-xs">{'⭐'.repeat(r)}</span>
@@ -279,13 +308,13 @@ export default function Dashboard() {
             {reviews.length === 0 ? (
               <EmptyState icon="💬" message="No reviews yet. Be the first!" />
             ) : reviews.map((r) => (
-              <div key={r._id} className="bg-[#1E293B] rounded-2xl border border-white/5 p-4 hover:border-white/10 transition">
+              <div key={r._id} className="bg-white rounded-2xl border border-[#F0E0C0] p-4 hover:border-orange-300/50 transition">
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-400 text-xs font-bold shrink-0">
                       {r.companyName[0]}
                     </div>
-                    <span className="font-semibold text-white text-sm truncate max-w-[140px]">{r.companyName}</span>
+                    <span className="font-semibold text-slate-800 text-sm truncate max-w-[140px]">{r.companyName}</span>
                   </div>
                   <span className="text-yellow-400 text-xs shrink-0">{'⭐'.repeat(r.rating)}</span>
                 </div>

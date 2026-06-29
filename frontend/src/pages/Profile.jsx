@@ -52,18 +52,18 @@ export default function Profile() {
 
       <div className="max-w-lg">
         {/* Avatar */}
-        <div className="flex items-center gap-4 mb-6 p-4 bg-[#1E293B] rounded-2xl border border-white/5">
+        <div className="flex items-center gap-4 mb-6 p-4 bg-white rounded-2xl border border-[#F0E0C0]">
           <div className="w-14 h-14 rounded-2xl bg-orange-500/20 border border-orange-500/30 flex items-center justify-center text-orange-400 font-black text-2xl shrink-0">
             {user?.companyName?.[0]?.toUpperCase()}
           </div>
           <div>
-            <p className="font-bold text-white">{user?.companyName}</p>
+            <p className="font-bold text-slate-800">{user?.companyName}</p>
             <p className="text-slate-400 text-sm">{user?.email}</p>
             <span className="text-xs bg-orange-500/15 text-orange-400 px-2 py-0.5 rounded-full font-medium capitalize">{user?.role}</span>
           </div>
         </div>
 
-        <form onSubmit={handleSave} className="bg-[#1E293B] rounded-2xl border border-white/5 p-5 sm:p-6 space-y-4">
+        <form onSubmit={handleSave} className="bg-white rounded-2xl border border-[#F0E0C0] p-5 sm:p-6 space-y-4">
           <div>
             <label className="label-dark">Company Name</label>
             <div className="relative">
@@ -105,7 +105,7 @@ export default function Profile() {
           </div>
 
           {/* Change password toggle */}
-          <div className="border-t border-white/5 pt-4">
+          <div className="border-t border-[#F0E0C0] pt-4">
             <button type="button" onClick={() => setShowPwd(!showPwd)}
               className="flex items-center gap-2 text-sm text-slate-400 hover:text-orange-400 transition">
               <LuLock size={14} />

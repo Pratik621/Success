@@ -53,7 +53,7 @@ export default function BookDeal() {
           <p className="page-subtitle">Fill in the details to submit your scrap metal deal</p>
         </div>
 
-        <div className="bg-[#1E293B] rounded-2xl border border-white/5 shadow-xl p-5 sm:p-7">
+        <div className="bg-white rounded-2xl border border-[#F0E0C0] shadow-sm p-5 sm:p-7">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="label-dark">Select Metal</label>
@@ -99,13 +99,13 @@ export default function BookDeal() {
               <label className="label-dark">Total Amount</label>
               <div className={`rounded-xl border px-4 py-3 text-sm font-bold transition-all
                 ${form.totalAmount
-                  ? 'bg-orange-500/10 border-orange-500/30 text-orange-400'
-                  : 'bg-[#0F172A] border-white/10 text-slate-500'}`}>
+                  ? 'bg-orange-500/10 border-orange-500/30 text-orange-500'
+                  : 'bg-[#FFF8EE] border-[#E8D5B0] text-slate-400'}`}>
                 {form.totalAmount ? `₹${parseFloat(form.totalAmount).toLocaleString()}` : 'Auto-calculated'}
               </div>
             </div>
 
-            <div className="border-t border-white/5" />
+            <div className="border-t border-[#F0E0C0]" />
 
             <button type="submit" disabled={loading} className="btn-primary w-full flex items-center justify-center gap-2">
               {loading ? (

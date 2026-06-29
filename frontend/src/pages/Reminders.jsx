@@ -72,7 +72,7 @@ export default function Reminders() {
 
       {/* Page Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-white flex items-center gap-2 mb-1">
+        <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-2 mb-1">
           <LuBell className="text-orange-500 shrink-0" size={24} /> Pickup Reminders
         </h1>
         <p className="text-slate-400 text-sm">
@@ -82,7 +82,7 @@ export default function Reminders() {
           onClick={() => setShowForm(!showForm)}
           className={`mt-4 w-full flex items-center justify-center gap-2 py-3 rounded-2xl font-semibold text-sm transition-all active:scale-95
             ${showForm
-              ? 'bg-white/8 text-slate-300 border border-white/10'
+              ? 'bg-slate-100 text-slate-600 border border-slate-200'
               : 'bg-orange-500 hover:bg-orange-600 text-white shadow-lg shadow-orange-500/20'}`}>
           {showForm ? <><LuX size={15} /> Cancel</> : <><LuPlus size={15} /> Set New Reminder</>}
         </button>
@@ -90,8 +90,8 @@ export default function Reminders() {
 
       {/* Form */}
       {showForm && (
-        <div className="bg-[#1E293B] rounded-2xl border border-orange-500/25 p-4 mb-6">
-          <p className="font-semibold text-white text-sm mb-4 flex items-center gap-2">
+        <div className="bg-white rounded-2xl border border-orange-400/30 p-4 mb-6">
+          <p className="font-semibold text-slate-800 text-sm mb-4 flex items-center gap-2">
             <LuBell size={14} className="text-orange-400" /> New Pickup Reminder
           </p>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -170,7 +170,7 @@ export default function Reminders() {
 
       {/* List */}
       {reminders.length === 0 ? (
-        <div className="bg-[#1E293B] rounded-2xl border border-white/5 p-10">
+        <div className="bg-white rounded-2xl border border-[#F0E0C0] p-10">
           <EmptyState icon="🔔" message="No reminders yet. Tap 'Set New Reminder' above." />
         </div>
       ) : (
@@ -185,8 +185,8 @@ export default function Reminders() {
 
             return (
               <div key={r._id}
-                className={`bg-[#1E293B] rounded-2xl border transition-all
-                  ${isToday ? 'border-orange-500/40' : isPast ? 'border-white/5 opacity-55' : 'border-white/5'}`}>
+                className={`bg-white rounded-2xl border transition-all
+                  ${isToday ? 'border-orange-500/40' : isPast ? 'border-[#F0E0C0] opacity-55' : 'border-[#F0E0C0]'}`}>
                 <div className="p-4">
 
                   {/* Single info line */}
@@ -200,7 +200,7 @@ export default function Reminders() {
                       {r.status}
                     </span>
                   </div>
-                  <p className="text-white text-sm font-medium leading-snug truncate">{summaryLine}</p>
+                  <p className="text-slate-800 text-sm font-medium leading-snug truncate">{summaryLine}</p>
                   {r.note && (
                     <p className="text-slate-500 text-xs mt-0.5 italic truncate">"{r.note}"</p>
                   )}

@@ -73,13 +73,13 @@ export default function MyDeals() {
       </div>
 
       {!Array.isArray(deals) || deals.length === 0 ? (
-        <div className="bg-[#1E293B] rounded-2xl border border-white/5 p-10">
+        <div className="bg-white rounded-2xl border border-[#F0E0C0] p-10">
           <EmptyState icon="📭" message="No deals found." />
         </div>
       ) : (
         <div className="space-y-3">
           {deals.map((d, i) => (
-            <div key={d._id} className="bg-[#1E293B] rounded-2xl border border-white/5 hover:border-white/10 transition">
+            <div key={d._id} className="bg-white rounded-2xl border border-[#F0E0C0] hover:border-orange-300/50 transition">
               <div className="p-4">
                 {/* Top row */}
                 <div className="flex items-center justify-between gap-3 mb-3">
@@ -88,13 +88,13 @@ export default function MyDeals() {
                       {d.metalType[0]}
                     </div>
                     <div>
-                      <p className="font-semibold text-white text-sm">{d.metalType}</p>
+                      <p className="font-semibold text-slate-800 text-sm">{d.metalType}</p>
                       <p className="text-slate-500 text-xs">{d.weight} {d.weightUnit} · ₹{d.rate}/kg</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
                     <Badge status={d.status} />
-                    <p className="font-bold text-white text-sm">₹{d.totalAmount.toLocaleString()}</p>
+                    <p className="font-bold text-slate-800 text-sm">₹{d.totalAmount.toLocaleString()}</p>
                   </div>
                 </div>
 
@@ -102,7 +102,7 @@ export default function MyDeals() {
                 {d.counterStatus === 'Pending' && (
                   <div className="bg-orange-500/10 border border-orange-500/25 rounded-xl p-3 mb-3">
                     <p className="text-orange-400 text-xs font-semibold mb-1">⚡ Admin Counter Offer</p>
-                    <p className="text-white text-sm">New rate: <span className="font-bold text-orange-400">₹{d.counterRate}/kg</span>
+                    <p className="text-slate-800 text-sm">New rate: <span className="font-bold text-orange-500">₹{d.counterRate}/kg</span>
                       {' '}→ Total: <span className="font-bold">₹{(d.weight * d.counterRate).toLocaleString()}</span>
                     </p>
                     {d.counterNote && <p className="text-slate-400 text-xs mt-1 italic">"{d.counterNote}"</p>}
@@ -130,7 +130,7 @@ export default function MyDeals() {
                 )}
 
                 {/* Bottom row */}
-                <div className="flex items-center justify-between pt-2 border-t border-white/5">
+                <div className="flex items-center justify-between pt-2 border-t border-[#F0E0C0]">
                   <p className="text-slate-600 text-xs">{new Date(d.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
                   {d.status === 'Completed' && (
                     <button onClick={() => navigate(`/invoice/${d._id}`)}

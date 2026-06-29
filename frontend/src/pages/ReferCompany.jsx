@@ -54,7 +54,7 @@ export default function ReferCompany() {
 
       {/* Page Header — same pattern as Reminders */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-white flex items-center gap-2 mb-1">
+        <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-2 mb-1">
           <LuUsers className="text-orange-500 shrink-0" size={24} /> Refer a Company
         </h1>
         <p className="text-slate-400 text-sm">
@@ -64,7 +64,7 @@ export default function ReferCompany() {
           onClick={() => setShowForm(!showForm)}
           className={`mt-4 w-full flex items-center justify-center gap-2 py-3 rounded-2xl font-semibold text-sm transition-all active:scale-95
             ${showForm
-              ? 'bg-white/8 text-slate-300 border border-white/10'
+              ? 'bg-slate-100 text-slate-600 border border-slate-200'
               : 'bg-orange-500 hover:bg-orange-600 text-white shadow-lg shadow-orange-500/20'}`}>
           {showForm ? <><LuX size={15} /> Cancel</> : <><LuPlus size={15} /> Refer a Company</>}
         </button>
@@ -74,7 +74,7 @@ export default function ReferCompany() {
       {total > 0 && (
         <div className="grid grid-cols-4 gap-2 mb-6">
           {[
-            { label: 'Total',     value: total,     color: 'text-white',        bg: 'bg-white/5',          border: 'border-white/8' },
+            { label: 'Total',     value: total,     color: 'text-slate-800',    bg: 'bg-slate-50',         border: 'border-slate-200' },
             { label: 'New',       value: pending,   color: 'text-blue-400',     bg: 'bg-blue-500/10',      border: 'border-blue-500/15' },
             { label: 'Contacted', value: contacted, color: 'text-yellow-400',   bg: 'bg-yellow-500/10',    border: 'border-yellow-500/15' },
             { label: 'Converted', value: converted, color: 'text-green-400',    bg: 'bg-green-500/10',     border: 'border-green-500/15' },
@@ -89,8 +89,8 @@ export default function ReferCompany() {
 
       {/* Form */}
       {showForm && (
-        <div className="bg-[#1E293B] rounded-2xl border border-orange-500/25 p-4 mb-6">
-          <p className="font-semibold text-white text-sm mb-4 flex items-center gap-2">
+        <div className="bg-white rounded-2xl border border-orange-400/30 p-4 mb-6">
+          <p className="font-semibold text-slate-800 text-sm mb-4 flex items-center gap-2">
             <LuUsers size={14} className="text-orange-400" /> Company Details
           </p>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -151,7 +151,7 @@ export default function ReferCompany() {
 
       {/* List */}
       {referrals.length === 0 ? (
-        <div className="bg-[#1E293B] rounded-2xl border border-white/5 p-10">
+        <div className="bg-white rounded-2xl border border-[#F0E0C0] p-10">
           <EmptyState icon="🤝" message="No referrals yet. Tap 'Refer a Company' above." />
         </div>
       ) : (
@@ -160,7 +160,7 @@ export default function ReferCompany() {
             const summaryLine = `${r.contactPerson} · ${r.phone}`;
             return (
               <div key={r._id}
-                className="bg-[#1E293B] rounded-2xl border border-white/5 transition-all">
+                className="bg-white rounded-2xl border border-[#F0E0C0] transition-all">
                 <div className="p-4">
 
                   {/* Status badge */}
@@ -171,7 +171,7 @@ export default function ReferCompany() {
                   </div>
 
                   {/* Company name — main line */}
-                  <p className="text-white text-sm font-semibold leading-snug truncate">{r.companyName}</p>
+                  <p className="text-slate-800 text-sm font-semibold leading-snug truncate">{r.companyName}</p>
 
                   {/* Contact line */}
                   <p className="text-slate-400 text-xs mt-0.5 truncate">{summaryLine}</p>
@@ -183,7 +183,7 @@ export default function ReferCompany() {
 
                   {/* Button below — same as reminder */}
                   <div className="mt-3">
-                    <div className="w-full flex items-center justify-between py-2.5 px-3 rounded-xl text-xs font-medium bg-white/5 border border-white/5">
+                    <div className="w-full flex items-center justify-between py-2.5 px-3 rounded-xl text-xs font-medium bg-slate-50 border border-slate-100">
                       <span className="text-slate-500">
                         Referred {new Date(r.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                       </span>

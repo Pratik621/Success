@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import logo from '../assets/vite.png';
 import { useState, useEffect, createContext, useContext } from 'react';
 import { contactAPI, authAPI } from '../services/api';
 import {
@@ -50,15 +51,15 @@ function LogoutModal({ open, onConfirm, onCancel }) {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onCancel} />
-      <div className="relative bg-[#1E293B] border border-white/10 rounded-2xl p-6 w-full max-w-sm shadow-2xl">
-        <button onClick={onCancel} className="absolute top-4 right-4 text-slate-500 hover:text-white transition">
+      <div className="relative bg-white border border-[#F0E0C0] rounded-2xl p-6 w-full max-w-sm shadow-2xl">
+        <button onClick={onCancel} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 transition">
           <LuX size={18} />
         </button>
         <div className="w-12 h-12 bg-red-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
           <LuLogOut size={22} className="text-red-400" />
         </div>
-        <h2 className="text-white font-bold text-center text-lg mb-1">Sign Out?</h2>
-        <p className="text-slate-400 text-sm text-center mb-6">Are you sure you want to logout?</p>
+        <h2 className="text-slate-800 font-bold text-center text-lg mb-1">Sign Out?</h2>
+        <p className="text-slate-500 text-sm text-center mb-6">Are you sure you want to logout?</p>
         <div className="flex gap-3">
           <button onClick={onCancel} className="btn-secondary flex-1">Cancel</button>
           <button onClick={onConfirm}
@@ -76,13 +77,13 @@ function HelpSheet({ open, onClose, contact }) {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-[#1E293B] border border-white/10 rounded-2xl w-full max-w-sm shadow-2xl p-6">
+      <div className="relative bg-white border border-[#F0E0C0] rounded-2xl w-full max-w-sm shadow-2xl p-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-white font-bold text-base flex items-center gap-2">
+          <h2 className="text-slate-800 font-bold text-base flex items-center gap-2">
             <LuHeadphones size={18} className="text-orange-400" /> Help & Contact
           </h2>
-          <button onClick={onClose} className="text-slate-500 hover:text-white transition p-1">
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-700 transition p-1">
             <LuX size={18} />
           </button>
         </div>
@@ -91,14 +92,14 @@ function HelpSheet({ open, onClose, contact }) {
         {!contact?.phone && !contact?.email && !contact?.address && !contact?.whatsapp ? (
           <div className="text-center py-6">
             <div className="text-4xl mb-3">📞</div>
-            <p className="text-slate-400 text-sm">Contact info not set yet.</p>
-            <p className="text-slate-500 text-xs mt-1">Admin will update this soon.</p>
+            <p className="text-slate-500 text-sm">Contact info not set yet.</p>
+            <p className="text-slate-400 text-xs mt-1">Admin will update this soon.</p>
           </div>
         ) : (
           <div className="space-y-3">
             {contact?.phone && (
               <a href={`tel:${contact.phone}`}
-                className="flex items-center gap-3 bg-[#0F172A] border border-green-500/20 rounded-2xl p-4 active:scale-95 transition-all cursor-pointer">
+                className="flex items-center gap-3 bg-[#FFF8EE] border border-green-500/20 rounded-2xl p-4 active:scale-95 transition-all cursor-pointer">
                 <div className="relative w-10 h-10 bg-green-500/10 rounded-xl flex items-center justify-center shrink-0">
                   <LuPhone size={17} className="text-green-400" />
                   <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-green-400 rounded-full">
@@ -116,7 +117,7 @@ function HelpSheet({ open, onClose, contact }) {
             )}
             {contact?.whatsapp && (
               <a href={`https://wa.me/${contact.whatsapp.replace(/\D/g,'')}`} target="_blank" rel="noreferrer"
-                className="flex items-center gap-3 bg-[#0F172A] border border-green-500/20 rounded-2xl p-4 active:scale-95 transition-all cursor-pointer">
+                className="flex items-center gap-3 bg-[#FFF8EE] border border-green-500/20 rounded-2xl p-4 active:scale-95 transition-all cursor-pointer">
                 <div className="w-10 h-10 bg-green-500/10 rounded-xl flex items-center justify-center shrink-0">
                   <LuMessageCircle size={17} className="text-green-400" />
                 </div>
@@ -128,7 +129,7 @@ function HelpSheet({ open, onClose, contact }) {
             )}
             {contact?.email && (
               <a href={`mailto:${contact.email}`}
-                className="flex items-center gap-3 bg-[#0F172A] border border-blue-500/20 rounded-2xl p-4 active:scale-95 transition-all cursor-pointer">
+                className="flex items-center gap-3 bg-[#FFF8EE] border border-blue-500/20 rounded-2xl p-4 active:scale-95 transition-all cursor-pointer">
                 <div className="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center shrink-0">
                   <LuMail size={17} className="text-blue-400" />
                 </div>
@@ -139,7 +140,7 @@ function HelpSheet({ open, onClose, contact }) {
               </a>
             )}
             {contact?.address && (
-              <div className="flex items-start gap-3 bg-[#0F172A] border border-white/5 rounded-2xl p-4">
+              <div className="flex items-start gap-3 bg-[#FFF8EE] border border-[#F0E0C0] rounded-2xl p-4">
                 <div className="w-10 h-10 bg-orange-500/10 rounded-xl flex items-center justify-center shrink-0 mt-0.5">
                   <LuMapPin size={17} className="text-orange-400" />
                 </div>
@@ -162,10 +163,12 @@ function Header({ isAdmin, onLogoutClick, notifs }) {
   const totalNotifs = isAdmin ? ((notifs.pendingDeals || 0) + (notifs.pendingReviews || 0) + (notifs.newReferrals || 0)) : 0;
 
   return (
-    <header className="sticky top-0 z-50 bg-[#0F172A]/90 backdrop-blur-md border-b border-white/5">
+    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#F0E0C0]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <Link to={isAdmin ? '/admin' : '/dashboard'} className="flex items-center gap-2.5 shrink-0">
-          <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-orange-500/30">S</div>
+          <div className="w-9 h-9 bg-orange-500 rounded-lg flex items-center justify-center shrink-0 shadow-md shadow-orange-500/30">
+              <img src={logo} alt="Logo" className="h-6 w-6 object-contain" />
+            </div>
           <div className="leading-tight">
             <span className="font-bold text-white text-sm sm:text-base">ScrapMetal</span>
             <span className="font-bold text-orange-500 text-sm sm:text-base"> Pro</span>
@@ -187,14 +190,14 @@ function Header({ isAdmin, onLogoutClick, notifs }) {
             </span>
           )}
           <div className="hidden sm:flex flex-col items-end">
-            <span className="text-xs font-semibold text-white leading-tight truncate max-w-[120px]">{user?.companyName}</span>
+            <span className="text-xs font-semibold text-slate-800 leading-tight truncate max-w-[120px]">{user?.companyName}</span>
             <span className="text-xs text-slate-500 capitalize">{user?.role}</span>
           </div>
           <div className="w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/30 flex items-center justify-center text-orange-400 font-bold text-sm">
             {user?.companyName?.[0]?.toUpperCase() || 'U'}
           </div>
           <button onClick={onLogoutClick}
-            className="hidden sm:flex items-center gap-1.5 text-slate-400 hover:text-red-400 transition text-sm font-medium px-3 py-1.5 rounded-xl hover:bg-red-500/10">
+            className="hidden sm:flex items-center gap-1.5 text-slate-500 hover:text-red-500 transition text-sm font-medium px-3 py-1.5 rounded-xl hover:bg-red-500/10">
             <LuLogOut size={15} /> Logout
           </button>
         </div>
@@ -217,7 +220,7 @@ function NavItem({ to, label, Icon, badge = 0 }) {
   return (
     <Link to={to} className="relative flex items-center gap-1.5 px-2.5 py-2 rounded-xl text-xs font-medium transition-all whitespace-nowrap
         ${active ? 'bg-orange-500/15 text-orange-400' : 'text-slate-400 hover:text-white hover:bg-white/5'}"
-      style={{ color: active ? '#f97316' : undefined, background: active ? 'rgba(249,115,22,0.15)' : undefined }}>
+      style={{ color: active ? '#f97316' : '#64748b', background: active ? 'rgba(249,115,22,0.12)' : undefined }}>
       <Icon size={14} />{label}
       {badge > 0 && (
         <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-[9px] font-bold flex items-center justify-center">
@@ -233,7 +236,7 @@ function BottomNav({ isAdmin, onHelpClick, notifs }) {
   const links = isAdmin ? adminLinks : userLinks;
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#1E293B] border-t border-white/5 px-1 py-1.5">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-[#F0E0C0] px-1 py-1.5">
       <div className="flex items-center justify-around">
         {links.map(({ to, label, Icon }) => {
           const active = pathname === to;
@@ -289,7 +292,7 @@ export default function Layout({ children, isAdmin = false }) {
 
   return (
     <LogoutModalContext.Provider value={() => setLogoutOpen(true)}>
-      <div className="min-h-screen bg-[#0F172A] text-white">
+      <div className="min-h-screen bg-[#FFFBF2] text-slate-800">
         <Header isAdmin={isAdmin} onLogoutClick={() => setLogoutOpen(true)} notifs={notifs} />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-24 md:pb-8">
           {children}

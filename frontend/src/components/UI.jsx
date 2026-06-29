@@ -16,7 +16,7 @@ export function Badge({ status }) {
 // Card wrapper
 export function Card({ children, className = '' }) {
   return (
-    <div className={`bg-[#1E293B] rounded-2xl border border-white/5 shadow-xl ${className}`}>
+    <div className={`bg-white rounded-2xl border border-[#F0E0C0] shadow-sm ${className}`}>
       {children}
     </div>
   );

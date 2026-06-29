@@ -29,7 +29,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0F172A] flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen bg-[#FFFBF2] flex items-center justify-center px-4 py-10">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
       
       {/* Contact Button - Mobile */}
@@ -46,10 +46,10 @@ export default function Login() {
           <div className="inline-flex items-center justify-center w-14 h-14 bg-orange-500 rounded-2xl shadow-xl shadow-orange-500/30 mb-4">
             <span className="text-white font-black text-2xl">S</span>
           </div>
-          <h1 className="text-2xl font-bold text-white">ScrapMetal <span className="text-orange-500">Pro</span></h1>
-          <p className="text-slate-400 text-sm mt-1">Sign in to your company account</p>
+          <h1 className="text-2xl font-bold text-slate-800">ScrapMetal <span className="text-orange-500">Pro</span></h1>
+          <p className="text-slate-500 text-sm mt-1">Sign in to your company account</p>
         </div>
-        <div className="bg-[#1E293B] rounded-2xl border border-white/5 shadow-2xl p-6 sm:p-8">
+        <div className="bg-white rounded-2xl border border-[#F0E0C0] shadow-xl p-6 sm:p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="label-dark">Email Address</label>
@@ -81,8 +81,8 @@ export default function Login() {
               )}
             </button>
           </form>
-          <div className="mt-6 pt-5 border-t border-white/5 text-center space-y-3">
-            <p className="text-sm text-slate-400">
+          <div className="mt-6 pt-5 border-t border-[#F0E0C0] text-center space-y-3">
+            <p className="text-sm text-slate-500">
               Don't have an account?{' '}
               <Link to="/signup" className="text-orange-400 font-semibold hover:text-orange-300 transition">Sign Up</Link>
             </p>
@@ -93,7 +93,7 @@ export default function Login() {
             {/* Desktop Contact Button */}
             <button
               onClick={() => setContactModalOpen(true)}
-              className="hidden md:flex w-full items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-orange-400 transition text-sm font-medium border border-slate-700 hover:border-orange-500/30 mt-4"
+              className="hidden md:flex w-full items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-orange-500 transition text-sm font-medium border border-slate-200 hover:border-orange-500/30 mt-4"
             >
               <LuHeadphones size={16} />
               Forgot Password? Contact Us
